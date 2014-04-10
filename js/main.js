@@ -2,7 +2,7 @@ var app = {
 
     showAlert: function (message, title) {
         if (navigator.notification) {
-            navigator.notification.alert(message, null, title, 'This is the Okay Button');
+            navigator.notification.alert(message, null, title, 'OK');
         } else {
             alert(title ? (title + ": " + message) : message);
         }
@@ -21,10 +21,23 @@ var app = {
         });
     },
 
+        renderHomeView: function() {
+        var html =
+                "<div class='header'><h1>Home</h1></div>" +
+                "<div class='search-view'>" +
+                "<input class='search-key'/>" +
+                "<ul class='employee-list'></ul>" +
+                "</div>"
+        $('body').html(html);
+        $('.search-key').on('keyup', $.proxy(this.findByName, this));
+    },
+
     initialize: function() {
         var self = this;
         this.store = new MemoryStore(function() {
-            self.showAlert('Store Initialized', 'Info');
+            self.showAlert('I Changed This', 'This is the Title!!!!');
+                self.renderHomeView();
+
         });
         $('.search-key').on('keyup', $.proxy(this.findByName, this));
     }
